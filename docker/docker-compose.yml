@@ -1,0 +1,61 @@
+version: '3.9'
+
+services:
+
+  # ── Next.js web app ─────────────────────────────────────────────────────────
+  app:
+    build: ..
+    container_name: atlas-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://atlas:${DB_PASSWORD}@atlas-db:5432/atlas
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+      NEXT_PUBLIC_APP_NAME: ${NEXT_PUBLIC_APP_NAME}
+      NEXT_PUBLIC_OFFICE_URL: ${NEXT_PUBLIC_OFFICE_URL}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      LLM_MODEL: ${LLM_MODEL}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL}
+      EMBEDDING_DIMENSIONS: ${EMBEDDING_DIMENSIONS}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+    depends_on:
+      atlas-db:
+        condition: service_healthy
+    networks: [atlas-net]
+
+  # ── PostgreSQL + pgvector (Atlas tenant, isolated from AskZambia) ───────────
+  atlas-db:
+    image: pgvector/pgvector:pg16
+    container_name: atlas-db
+    restart: unless-stopped
+    # No host port binding in production — Coolify routes via internal network.
+    # Uncomment for local dev if you need psql from host:
+    # ports:
+    #   - "5433:5432"
+    environment:
+      POSTGRES_DB: atlas
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - atlas_postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atlas"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [atlas-net]
+
+volumes:
+  atlas_postgres_data:
+
+networks:
+  atlas-net:
+    driver: bridge

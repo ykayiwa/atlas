@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Atlas AI — 3 iPhone Screenshots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #0c0c18;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 72px;
+}
+
+/* ── Page header ─────────────────────────────── */
+.page-header {
+  text-align: center;
+  color: #fff;
+}
+.page-header h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.page-header p  { font-size: 13px; color: #666; }
+
+/* ── Section wrapper ─────────────────────────── */
+.section { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #444;
+}
+
+/* ── Export bar ──────────────────────────────── */
+.export-bar { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.export-bar button {
+  font-family: inherit; font-size: 12px; font-weight: 700;
+  padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer;
+  transition: transform .1s, opacity .15s;
+  letter-spacing: .01em;
+}
+.export-bar button:hover  { opacity: .85; }
+.export-bar button:active { transform: scale(.97); }
+.btn-65 { background: #0A0A0A; color: #fff; }
+.btn-67 { background: #1a1a1a; color: #fff; }
+
+/* ════════════════════════════════════════════════
+   SLIDE  —  414 × 896 px  →  1242 × 2688 (3×)
+════════════════════════════════════════════════ */
+.slide {
+  width: 414px;
+  height: 896px;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 32px 80px rgba(0,0,0,.6);
+}
+
+/* ── Headline zone (above phone) ─────────────── */
+.copy {
+  width: 100%;
+  padding: 44px 28px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+.tag {
+  font-size: 10px; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 5px 13px; border-radius: 20px;
+  margin-bottom: 13px;
+}
+.headline {
+  font-size: 36px; font-weight: 900; line-height: 1.08;
+  text-align: center; margin-bottom: 8px;
+}
+.sub {
+  font-size: 13px; font-weight: 500; text-align: center;
+  line-height: 1.4; opacity: .7; max-width: 300px;
+}
+
+/* ── Phone frame ─────────────────────────────── */
+.phone-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px 0 20px;
+}
+.phone {
+  width: 248px;
+  height: 508px;
+  background: #111120;
+  border-radius: 46px;
+  padding: 10px;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08),
+    0 28px 70px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.1);
+  flex-shrink: 0;
+}
+/* Dynamic Island */
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 18px; left: 50%;
+  transform: translateX(-50%);
+  width: 76px; height: 21px;
+  background: #000;
+  border-radius: 12px;
+  z-index: 10;
+}
+/* Side buttons */
+.phone::after {
+  content: '';
+  position: absolute;
+  right: -3px; top: 100px;
+  width: 3px; height: 60px;
+  background: #222235;
+  border-radius: 0 2px 2px 0;
+}
+.screen {
+  width: 100%; height: 100%;
+  background: #fff;
+  border-radius: 36px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Status bar */
+.status-bar {
+  height: 44px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 20px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════
+   SLIDE 1 — LANDING / HERO
+   Background: rich green → deep teal
+════════════════════════════════════════════════ */
+#s1 {
+  background: linear-gradient(170deg, #0d3320 0%, #1a5c38 40%, #0f4027 100%);
+}
+#s1 .tag  { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+#s1 .headline { color: #fff; }
+#s1 .headline em { color: #4ade80; font-style: normal; }
+#s1 .sub  { color: rgba(255,255,255,.75); }
+
+.s1-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+.s1-nav {
+  padding: 10px 14px 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+.s1-logo  { font-size: 13px; font-weight: 800; color: #0A0A0A; }
+.s1-cta   { background: #0A0A0A; color: #fff; font-size: 8px; font-weight: 700;
+             padding: 4px 9px; border-radius: 6px; }
+.s1-body  { flex: 1; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.s1-badge {
+  align-self: center;
+  background: #e8f5ee; border: 1px solid #b2dfca;
+  border-radius: 20px; font-size: 8px; font-weight: 600; color: #1a1a1a;
+  padding: 4px 10px;
+}
+.s1-h1 {
+  font-size: 18px; font-weight: 900; text-align: center;
+  color: #0d1f14; line-height: 1.15;
+}
+.s1-h1 span { color: #fcdc04; }
+.s1-search {
+  border: 1.5px solid #e2e8f0; border-radius: 10px;
+  padding: 9px 12px; font-size: 9px; color: #94a3b8;
+  background: #f8fafc;
+}
+.s1-btn {
+  background: #0A0A0A; color: #fff; border-radius: 9px;
+  text-align: center; font-size: 10px; font-weight: 800;
+  padding: 9px; letter-spacing: .01em;
+}
+.s1-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.s1-chip {
+  border: 1px solid #e2e8f0; border-radius: 20px;
+  font-size: 8px; padding: 3px 8px; color: #374151;
+  background: #fff;
+}
+.s1-stats {
+  display: flex; border: 1.5px solid #e2e8f0; border-radius: 12px;
+  overflow: hidden; margin-top: auto;
+}
+.s1-stat  { flex: 1; text-align: center; padding: 8px 4px; border-right: 1px solid #e2e8f0; }
+.s1-stat:last-child { border-right: none; }
+.s1-sn    { font-size: 15px; font-weight: 900; color: #0A0A0A; }
+.s1-sl    { font-size: 7px; color: #6b7280; margin-top: 1px; }
+
+/* ════════════════════════════════════════════════
+   SLIDE 2 — CHAT IN ACTION
+   Background: dark navy → midnight
+════════════════════════════════════════════════ */
+#s2 {
+  background: linear-gradient(170deg, #0a0a1a 0%, #111128 55%, #0d1f14 100%);
+}
+#s2 .tag     { background: rgba(0,0,0,.25); color: #4ade80; border: 1px solid rgba(0,0,0,.4); }
+#s2 .headline { color: #fff; }
+#s2 .headline em { color: #fcdc04; font-style: normal; }
+#s2 .sub     { color: rgba(255,255,255,.55); }
+
+.s2-screen {
+  height: 100%;
+  display: flex;
+  background: #fff;
+}
+/* sidebar */
+.s2-sidebar {
+  width: 52px; background: #0f1120;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 12px 6px 10px; gap: 8px; flex-shrink: 0;
+}
+.s2-az {
+  width: 34px; height: 34px; background: #0A0A0A;
+  border-radius: 10px; display: flex; align-items: center;
+  justify-content: center; font-size: 10px; font-weight: 800; color: #fff;
+}
+.s2-newchat {
+  width: 38px; background: #0A0A0A; border-radius: 7px;
+  padding: 5px 3px; text-align: center;
+  font-size: 7px; font-weight: 700; color: #fff; line-height: 1.3;
+}
+.s2-divider { width: 28px; height: 1px; background: #1e2035; }
+.s2-hist { width: 34px; height: 10px; background: #1e2035; border-radius: 4px; }
+.s2-hist2 { width: 28px; height: 10px; background: #181828; border-radius: 4px; }
+/* main */
+.s2-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.s2-topbar {
+  padding: 8px 10px 7px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 8px; color: #6b7280; background: #fff; flex-shrink: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.s2-msgs { flex: 1; padding: 8px 8px 6px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+.s2-user {
+  align-self: flex-end;
+  background: #0A0A0A; color: #fff;
+  border-radius: 12px 12px 3px 12px;
+  font-size: 8px; padding: 6px 8px; line-height: 1.45;
+  max-width: 80%;
+}
+.s2-ai-row { display: flex; gap: 5px; align-items: flex-start; }
+.s2-avatar {
+  width: 18px; height: 18px; background: #0A0A0A; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 6px; font-weight: 800; color: #fff; flex-shrink: 0; margin-top: 1px;
+}
+.s2-ai-bubble {
+  background: #f8fafc; border: 1px solid #e8ecf0;
+  border-radius: 3px 12px 12px 12px;
+  font-size: 7.5px; padding: 6px 8px;
+  line-height: 1.55; color: #1a1a2e; flex: 1;
+}
+.s2-ai-bubble b { font-weight: 700; color: #0d1f14; }
+.s2-ai-bubble .art { font-size: 6.5px; color: #0A0A0A; font-weight: 600; }
+.s2-cites { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.s2-cite {
+  border: 1px solid #0A0A0A; border-radius: 10px;
+  font-size: 6.5px; color: #1a1a1a; padding: 2px 6px;
+  background: #f0faf5;
+}
+.s2-inputrow {
+  border-top: 1px solid #f0f0f0; padding: 6px 8px;
+  font-size: 8px; color: #9ca3af; background: #fff; flex-shrink: 0;
+  display: flex; align-items: center; gap: 6px;
+}
+.s2-inputbox {
+  flex: 1; background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 16px; padding: 5px 10px; font-size: 7.5px; color: #9ca3af;
+}
+.s2-send {
+  width: 22px; height: 22px; background: #0A0A0A; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: #fff; flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════
+   SLIDE 3 — TOPICS / KNOWLEDGE CATEGORIES
+   Background: warm copper/orange
+════════════════════════════════════════════════ */
+#s3 {
+  background: linear-gradient(170deg, #2d1200 0%, #5c2800 45%, #3d1a00 100%);
+}
+#s3 .tag     { background: rgba(252,220,4,.2); color: #fb923c; border: 1px solid rgba(252,220,4,.35); }
+#s3 .headline { color: #fff; }
+#s3 .headline em { color: #4ade80; font-style: normal; }
+#s3 .sub     { color: rgba(255,255,255,.6); }
+
+.s3-screen {
+  height: 100%; display: flex; flex-direction: column; background: #fff;
+}
+.s3-nav {
+  padding: 10px 14px 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #f0f0f0; flex-shrink: 0;
+}
+.s3-logo { font-size: 13px; font-weight: 800; color: #0A0A0A; }
+.s3-lbl {
+  text-align: center; font-size: 8px; font-weight: 700; letter-spacing: .07em;
+  color: #0A0A0A; padding: 8px 0 4px; flex-shrink: 0;
+}
+.s3-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 7px; padding: 0 10px 10px; flex: 1; overflow: hidden;
+}
+.s3-card {
+  border: 1.5px solid #e8ecf0; border-radius: 10px;
+  padding: 9px 9px 8px; position: relative; overflow: hidden;
+  background: #fff; display: flex; flex-direction: column; gap: 4px;
+}
+.s3-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px; border-radius: 4px 0 0 4px;
+}
+.s3-icon {
+  width: 24px; height: 24px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0;
+}
+.s3-name { font-size: 9px; font-weight: 800; color: #0d1f14; margin-top: 2px; }
+.s3-desc { font-size: 7.5px; color: #6b7280; line-height: 1.35; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Atlas AI — iPhone Screenshots</h1>
+  <p>Open in Chrome · click Export · find PNGs in Downloads</p>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1 — LANDING / HERO
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Screen 1 — Landing page</div>
+  <div class="export-bar">
+    <button class="btn-65" onclick="exp('s1','atlas_01_landing_iphone65',1242,2688)">⬇ Export iPhone 6.5"  1242×2688</button>
+    <button class="btn-67" onclick="exp('s1','atlas_01_landing_iphone67',1284,2778)">⬇ Export iPhone 6.7"  1284×2778</button>
+  </div>
+
+  <div class="slide" id="s1">
+    <div class="copy">
+      <div class="tag">ZAMBIA'S AI ASSISTANT</div>
+      <div class="headline">Ask anything<br>about <em>Zambia</em></div>
+      <div class="sub">Instant answers from verified national sources — laws, government, tourism & more</div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="s1-screen">
+            <div class="status-bar" style="background:#fff;color:#0d1f14">
+              <span>9:41</span>
+              <span style="display:flex;gap:3px;align-items:center;font-size:10px">
+                <svg width="14" height="10" viewBox="0 0 14 10"><rect x="0" y="3" width="3" height="7" rx="1" fill="#0d1f14"/><rect x="4" y="2" width="3" height="8" rx="1" fill="#0d1f14"/><rect x="8" y="0" width="3" height="10" rx="1" fill="#0d1f14"/><rect x="12" y="0" width="2" height="10" rx="1" fill="#d1d5db"/></svg>
+              </span>
+            </div>
+            <div class="s1-nav">
+              <span class="s1-logo">Atlas AI</span>
+              <span class="s1-cta">Open Chat</span>
+            </div>
+            <div class="s1-body">
+              <div class="s1-badge">• Africa's First National AI Platform</div>
+              <div class="s1-h1">Ask anything<br>about <span>Zambia</span></div>
+              <div class="s1-search">Ask about laws, business, tourism...</div>
+              <div class="s1-btn">Ask Atlas AI →</div>
+              <div class="s1-chips">
+                <span class="s1-chip">Constitutional rights</span>
+                <span class="s1-chip">Register a business</span>
+                <span class="s1-chip">Work permits</span>
+                <span class="s1-chip">Tourism guide</span>
+                <span class="s1-chip">Economic data</span>
+              </div>
+              <div class="s1-stats">
+                <div class="s1-stat"><div class="s1-sn">90+</div><div class="s1-sl">Verified sources</div></div>
+                <div class="s1-stat"><div class="s1-sn">73+</div><div class="s1-sl">Ethnic cultures</div></div>
+                <div class="s1-stat"><div class="s1-sn">Free</div><div class="s1-sl">No sign-up</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 2 — CHAT PAGE
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Screen 2 — Chat in action</div>
+  <div class="export-bar">
+    <button class="btn-65" onclick="exp('s2','atlas_02_chat_iphone65',1242,2688)">⬇ Export iPhone 6.5"  1242×2688</button>
+    <button class="btn-67" onclick="exp('s2','atlas_02_chat_iphone67',1284,2778)">⬇ Export iPhone 6.7"  1284×2778</button>
+  </div>
+
+  <div class="slide" id="s2">
+    <div class="copy">
+      <div class="tag">SEE IT IN ACTION</div>
+      <div class="headline">Real answers,<br><em>cited sources</em></div>
+      <div class="sub">Every response references official Zambian government documents</div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="s2-screen">
+            <div class="s2-sidebar">
+              <div class="s2-az">AZ</div>
+              <div class="s2-newchat">+ New Chat</div>
+              <div class="s2-divider"></div>
+              <div class="s2-hist"></div>
+              <div class="s2-hist2"></div>
+              <div class="s2-hist2" style="width:22px;opacity:.5"></div>
+            </div>
+            <div class="s2-main">
+              <div class="status-bar" style="background:#fff;color:#6b7280;font-size:9px;padding:0 10px 4px;height:32px">
+                <span style="font-weight:700;color:#0d1f14">9:41</span>
+                <span>Atlas AI</span>
+              </div>
+              <div class="s2-topbar">What are my rights under the Zambian constitution?</div>
+              <div class="s2-msgs">
+                <div class="s2-user">What are my rights<br>under the Zambian<br>constitution?</div>
+                <div class="s2-ai-row">
+                  <div class="s2-avatar">AZ</div>
+                  <div class="s2-ai-bubble">
+                    <b>Your Fundamental Rights</b><br><br>
+                    <b>1. Equality (Art. 23)</b><br>
+                    <span class="art">Equal treatment — race, tribe, sex</span><br><br>
+                    <b>2. Life &amp; Liberty (Art. 12–13)</b><br>
+                    <span class="art">Right to life · Personal liberty</span><br><br>
+                    <b>3. Expression (Art. 20)</b><br>
+                    <span class="art">Speech, press &amp; academic freedom</span><br><br>
+                    <b>4. Privacy (Art. 17)</b><br>
+                    <span class="art">Home, family &amp; communications</span>
+                    <div class="s2-cites">
+                      <span class="s2-cite">📄 Constitution of Zambia (2016)</span>
+                      <span class="s2-cite">📄 Human Rights in Zambia</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="s2-inputrow">
+                <div class="s2-inputbox">Ask anything about Zambia...</div>
+                <div class="s2-send">↑</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 — KNOWLEDGE TOPICS
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Screen 3 — Knowledge categories</div>
+  <div class="export-bar">
+    <button class="btn-65" onclick="exp('s3','atlas_03_topics_iphone65',1242,2688)">⬇ Export iPhone 6.5"  1242×2688</button>
+    <button class="btn-67" onclick="exp('s3','atlas_03_topics_iphone67',1284,2778)">⬇ Export iPhone 6.7"  1284×2778</button>
+  </div>
+
+  <div class="slide" id="s3">
+    <div class="copy">
+      <div class="tag">EXPLORE BY TOPIC</div>
+      <div class="headline">7 knowledge<br><em>categories</em></div>
+      <div class="sub">From constitutional law to Victoria Falls — it's all covered</div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="s3-screen">
+            <div class="status-bar" style="background:#fff;color:#0d1f14">
+              <span>9:41</span>
+              <span style="font-size:9px;color:#6b7280">Explore topics</span>
+            </div>
+            <div class="s3-nav">
+              <span class="s3-logo">Atlas AI</span>
+              <span style="font-size:8px;font-weight:600;color:#6b7280">7 topics</span>
+            </div>
+            <div class="s3-lbl">EXPLORE BY TOPIC</div>
+            <div class="s3-grid">
+
+              <div class="s3-card">
+                <div class="s3-bar" style="background:#0A0A0A"></div>
+                <div class="s3-icon" style="background:#e8f5ee">⚖️</div>
+                <div class="s3-name">Law &amp; Rights</div>
+                <div class="s3-desc">Constitutional rights &amp; legal processes</div>
+              </div>
+
+              <div class="s3-card">
+                <div class="s3-bar" style="background:#0d6efd"></div>
+                <div class="s3-icon" style="background:#e8f0ff">🏛️</div>
+                <div class="s3-name">Government</div>
+                <div class="s3-desc">Passports, PACRA, tax &amp; services</div>
+              </div>
+
+              <div class="s3-card">
+                <div class="s3-bar" style="background:#fcdc04"></div>
+                <div class="s3-icon" style="background:#fff0e8">🦁</div>
+                <div class="s3-name">Tourism</div>
+                <div class="s3-desc">Victoria Falls &amp; national parks</div>
+              </div>
+
+              <div class="s3-card">
+                <div class="s3-bar" style="background:#6f42c1"></div>
+                <div class="s3-icon" style="background:#f0e8ff">🎓</div>
+                <div class="s3-name">Education</div>
+                <div class="s3-desc">Schools, exams &amp; scholarships</div>
+              </div>
+
+              <div class="s3-card">
+                <div class="s3-bar" style="background:#0a7d55"></div>
+                <div class="s3-icon" style="background:#e0f5ec">📈</div>
+                <div class="s3-name">Economy</div>
+                <div class="s3-desc">GDP, trade, mining &amp; investment</div>
+              </div>
+
+              <div class="s3-card">
+                <div class="s3-bar" style="background:#d63384"></div>
+                <div class="s3-icon" style="background:#ffe0f0">🥁</div>
+                <div class="s3-name">Culture</div>
+                <div class="s3-desc">73+ ethnic groups &amp; heritage</div>
+              </div>
+
+              <div class="s3-card">
+                <div class="s3-bar" style="background:#dc3545"></div>
+                <div class="s3-icon" style="background:#ffe8ea">🏥</div>
+                <div class="s3-name">Healthcare</div>
+                <div class="s3-desc">Facilities &amp; public health</div>
+              </div>
+
+              <div class="s3-card" style="background:#f8fafc;border-style:dashed">
+                <div class="s3-bar" style="background:#e2e8f0"></div>
+                <div class="s3-icon" style="background:#f1f5f9">⚡</div>
+                <div class="s3-name" style="color:#94a3b8">More soon</div>
+                <div class="s3-desc">Infrastructure &amp; more topics</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     EXPORT ENGINE
+══════════════════════════════════════════════ -->
+<script>
+function exp(id, filename, w, h) {
+  const el = document.getElementById(id);
+  const btn = event.currentTarget;
+  const orig = btn.textContent;
+
+  btn.textContent = '⏳ Rendering...';
+  btn.disabled = true;
+
+  // Wait a tick for fonts/images to settle
+  requestAnimationFrame(() => setTimeout(() => {
+    const srcW = el.offsetWidth;
+    const srcH = el.offsetHeight;
+    const scale = w / srcW;
+    const scaledH = srcH * scale;
+    const padTop = Math.max(0, (h - scaledH) / 2);
+
+    htmlToImage.toPng(el, {
+      width: w,
+      height: h,
+      style: {
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+        marginTop: `${padTop / scale}px`,
+      },
+      pixelRatio: 1,
+      cacheBust: true,
+    })
+    .then(dataUrl => {
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = filename + '.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      btn.textContent = '✅ Saved to Downloads!';
+      setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2500);
+    })
+    .catch(err => {
+      console.error(err);
+      btn.textContent = '❌ Error — see console';
+      btn.disabled = false;
+    });
+  }, 300));
+}
+</script>
+</body>
+</html>

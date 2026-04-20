@@ -1,0 +1,24 @@
+# deps
+node_modules
+# builds
+.next
+out
+dist
+# env
+.env
+.env.local
+.env.askzambia.backup
+ingestion/.env
+# python
+__pycache__
+*.pyc
+.venv
+venv
+# os
+.DS_Store
+Thumbs.db
+# editor
+.vscode
+.idea
+# logs
+*.log

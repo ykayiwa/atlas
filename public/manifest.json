@@ -1,0 +1,33 @@
+{
+  "name": "Atlas AI — Ministerial Intelligence Engine",
+  "short_name": "Atlas AI",
+  "description": "The 24/7 investor engagement platform of the Office of the Hon. State Minister of Finance for Investment & Privatization, Republic of Uganda.",
+  "start_url": "/chat",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0A0A0A",
+  "orientation": "portrait-primary",
+  "categories": ["government", "reference", "business"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "New Question",
+      "url": "/chat",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

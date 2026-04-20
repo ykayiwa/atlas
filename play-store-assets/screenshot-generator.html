@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Atlas AI — App Store Screenshot Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0f0f1a;
+  color: #fff;
+  padding: 40px 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: #fff;
+}
+.subtitle {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+/* ── Slide wrapper ─────────────────────────────────────── */
+.slide-section {
+  margin-bottom: 64px;
+}
+.slide-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+/* Export buttons */
+.export-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.export-bar button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.export-bar button:hover { opacity: .8; }
+.btn-iphone  { background: #0A0A0A; color: #fff; }
+.btn-ipad    { background: #0d6efd; color: #fff; }
+.btn-android { background: #fcdc04; color: #fff; }
+.btn-feature { background: #6f42c1; color: #fff; }
+
+/* ── Slide canvas ──────────────────────────────────────── */
+.slide {
+  width: 414px;
+  background: #f0faf5;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  padding: 36px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+
+/* headline above phone */
+.slide-tag {
+  display: inline-flex;
+  align-items: center;
+  background: #0A0A0A;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.slide-headline {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: center;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+.slide-headline span { color: #fcdc04; }
+.slide-sub {
+  font-size: 13px;
+  color: #6c757d;
+  text-align: center;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+/* ── Phone frame ───────────────────────────────────────── */
+.phone {
+  width: 260px;
+  flex-shrink: 0;
+  background: #1a1a2e;
+  border-radius: 42px;
+  padding: 11px;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 17px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 20px;
+  background: #0a0a14;
+  border-radius: 10px;
+  z-index: 2;
+}
+.screen {
+  background: #fff;
+  border-radius: 32px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Slide backgrounds */
+.s1 { background: linear-gradient(160deg, #e8f5ee 0%, #c8e6d4 100%); }
+.s2 { background: linear-gradient(160deg, #fff3e8 0%, #ffe0c0 100%); }
+.s3 { background: linear-gradient(160deg, #eef0ff 0%, #d4daff 100%); }
+.s4 { background: linear-gradient(160deg, #e8f5ee 0%, #b8ddc8 100%); }
+.s5 { background: linear-gradient(160deg, #f3eeff 0%, #ddd0ff 100%); }
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN CONTENT — each screen is a mini replica of the app
+   ═══════════════════════════════════════════════════════════ */
+
+/* SHARED app components */
+.app-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 8px;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+}
+.app-nav-logo {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0A0A0A;
+}
+.app-nav-btn {
+  background: #0A0A0A;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* ── Screen 1: Hero ───────────────── */
+.s1-screen {
+  padding: 0;
+  background: #fff;
+}
+.s1-badge {
+  margin: 10px auto 0;
+  display: inline-block;
+  background: #e8f5ee;
+  border: 1px solid #0A0A0A;
+  border-radius: 12px;
+  font-size: 8px;
+  font-weight: 600;
+  color: #1a1a1a;
+  padding: 3px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+.s1-h1 {
+  font-size: 17px;
+  font-weight: 900;
+  text-align: center;
+  color: #1a1a2e;
+  padding: 8px 10px 0;
+  line-height: 1.15;
+}
+.s1-h1 span { color: #fcdc04; }
+.s1-searchbar {
+  margin: 8px 10px;
+  border: 1.5px solid #dee2e6;
+  border-radius: 10px;
+  padding: 7px 10px;
+  font-size: 9px;
+  color: #adb5bd;
+  background: #fff;
+}
+.s1-askbtn {
+  margin: 0 10px 6px;
+  background: #0A0A0A;
+  color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 7px;
+}
+.s1-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 10px 8px;
+}
+.s1-chip {
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  font-size: 8px;
+  padding: 3px 7px;
+  color: #495057;
+  background: #fff;
+}
+.s1-stats {
+  display: flex;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  margin: 0 10px 10px;
+  overflow: hidden;
+}
+.s1-stat {
+  flex: 1;
+  text-align: center;
+  padding: 6px 4px;
+  border-right: 1px solid #e9ecef;
+}
+.s1-stat:last-child { border-right: none; }
+.s1-stat-num { font-size: 14px; font-weight: 800; color: #0A0A0A; }
+.s1-stat-lbl { font-size: 7px; color: #6c757d; margin-top: 1px; }
+
+/* ── Screen 2: Topics ─────────────── */
+.s2-screen { padding: 0; background: #fff; }
+.s2-section-lbl {
+  text-align: center;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #0A0A0A;
+  padding: 8px 0 4px;
+}
+.s2-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0 8px 8px;
+}
+.s2-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 8px 8px 6px;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+.s2-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+}
+.s2-card-title { font-size: 9px; font-weight: 700; color: #1a1a2e; margin-bottom: 3px; }
+.s2-card-desc  { font-size: 7.5px; color: #6c757d; line-height: 1.35; }
+
+/* ── Screen 3: How it works ───────── */
+.s3-screen { padding: 0 0 8px; background: #fff; }
+.s3-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.s3-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: #fff;
+  flex-shrink: 0;
+}
+.s3-step-title { font-size: 10px; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+.s3-step-desc  { font-size: 8px; color: #6c757d; line-height: 1.4; }
+.s3-lang {
+  background: #e8f5ee;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 6px 10px 0;
+  font-size: 8px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.s3-free {
+  background: #1a1a2e;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 6px 10px 0;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ── Screen 4: Chat ───────────────── */
+.s4-screen { padding: 0; background: #fff; display: flex; height: 100%; }
+.s4-sidebar {
+  width: 56px;
+  background: #1a1a2e;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 6px;
+  gap: 6px;
+}
+.s4-logo {
+  background: #0A0A0A;
+  border-radius: 7px;
+  width: 100%;
+  padding: 4px 0;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 800;
+  color: #fff;
+}
+.s4-newchat {
+  background: #0A0A0A;
+  border-radius: 6px;
+  padding: 4px 2px;
+  text-align: center;
+  font-size: 7px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.s4-hist { background: #2d2f47; border-radius: 5px; height: 14px; margin-top: 2px; }
+.s4-main { flex: 1; display: flex; flex-direction: column; }
+.s4-topbar {
+  padding: 7px 8px 6px;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 8px;
+  color: #6c757d;
+  background: #fff;
+}
+.s4-messages { flex: 1; padding: 6px 8px; overflow: hidden; }
+.s4-user-bubble {
+  background: #0A0A0A;
+  color: #fff;
+  border-radius: 10px 10px 2px 10px;
+  font-size: 8px;
+  padding: 5px 7px;
+  float: right;
+  clear: both;
+  max-width: 75%;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.s4-ai-row { display: flex; gap: 5px; margin-bottom: 6px; clear: both; }
+.s4-az {
+  width: 18px; height: 18px;
+  background: #0A0A0A;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7px; font-weight: 800; color: #fff;
+  flex-shrink: 0;
+}
+.s4-bubble {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 2px 10px 10px 10px;
+  font-size: 7.5px;
+  padding: 5px 7px;
+  line-height: 1.5;
+  color: #1a1a2e;
+  flex: 1;
+}
+.s4-bubble b { color: #1a1a2e; }
+.s4-bubble .cite {
+  display: inline-block;
+  border: 1px solid #0A0A0A;
+  border-radius: 10px;
+  font-size: 6.5px;
+  color: #1a1a1a;
+  padding: 2px 5px;
+  margin-top: 4px;
+  margin-right: 3px;
+}
+.s4-input {
+  border-top: 1px solid #e9ecef;
+  padding: 5px 8px;
+  font-size: 8px;
+  color: #adb5bd;
+  background: #fff;
+}
+
+/* ── Screen 5: Sources ────────────── */
+.s5-screen { padding: 0; background: #fff; }
+.s5-section-lbl {
+  text-align: center;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #0A0A0A;
+  padding: 8px 0 4px;
+}
+.s5-source {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.s5-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.s5-source-name  { font-size: 9px; font-weight: 700; color: #1a1a2e; }
+.s5-source-sub   { font-size: 7.5px; color: #6c757d; }
+.s5-badge {
+  margin: 8px 10px 6px;
+  background: #e8f5ee;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.s5-badge-title { font-size: 9px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+.s5-badge-sub   { font-size: 8px; color: #0A0A0A; }
+</style>
+</head>
+<body>
+
+<h1>Atlas AI — Screenshot Generator</h1>
+<p class="subtitle">Open this file in Chrome · Click any Export button · Find PNGs in your Downloads folder</p>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 1 — HERO
+════════════════════════════════════════════ -->
+<div class="slide-section">
+  <div class="slide-label">Slide 1 — Hero (Landing page)</div>
+  <div class="export-bar">
+    <button class="btn-iphone" onclick="exportSlide('s1','atlas_s1_iphone',1242,2688)">⬇ iPhone 1242×2688</button>
+    <button class="btn-iphone" onclick="exportSlide('s1','atlas_s1_iphone67',1284,2778)">⬇ iPhone 1284×2778</button>
+    <button class="btn-ipad"   onclick="exportSlide('s1','atlas_s1_ipad',2048,2732)">⬇ iPad 2048×2732</button>
+    <button class="btn-android" onclick="exportSlide('s1','atlas_s1_android',1080,1920)">⬇ Android 1080×1920</button>
+    <button class="btn-feature" onclick="exportSlide('s1','atlas_s1_feature',1024,500)">⬇ Feature Graphic 1024×500</button>
+  </div>
+
+  <div class="slide s1" id="s1">
+    <div class="slide-tag">ZAMBIA'S AI ASSISTANT</div>
+    <div class="slide-headline">Ask anything about<br><span>Zambia</span></div>
+    <div class="slide-sub">Instant answers from verified national sources</div>
+
+    <div class="phone">
+      <div class="screen">
+        <div class="s1-screen">
+          <div class="app-nav">
+            <span class="app-nav-logo">Atlas AI</span>
+            <span class="app-nav-btn">Open Chat</span>
+          </div>
+          <div class="s1-badge">• Africa's First National AI Knowledge Platform</div>
+          <div class="s1-h1">Ask anything about <span>Zambia</span></div>
+          <div class="s1-searchbar">Ask about laws, business, tourism...</div>
+          <div class="s1-askbtn">Ask Atlas AI →</div>
+          <div class="s1-chips">
+            <span class="s1-chip">Constitutional rights</span>
+            <span class="s1-chip">Register a business</span>
+            <span class="s1-chip">Work permits</span>
+            <span class="s1-chip">Tourism guide</span>
+            <span class="s1-chip">Economic data</span>
+          </div>
+          <div class="s1-stats">
+            <div class="s1-stat"><div class="s1-stat-num">90+</div><div class="s1-stat-lbl">Verified sources</div></div>
+            <div class="s1-stat"><div class="s1-stat-num">73+</div><div class="s1-stat-lbl">Ethnic cultures</div></div>
+            <div class="s1-stat"><div class="s1-stat-num">7</div><div class="s1-stat-lbl">Topics</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 2 — TOPICS
+════════════════════════════════════════════ -->
+<div class="slide-section">
+  <div class="slide-label">Slide 2 — Knowledge Categories</div>
+  <div class="export-bar">
+    <button class="btn-iphone" onclick="exportSlide('s2','atlas_s2_iphone',1242,2688)">⬇ iPhone 1242×2688</button>
+    <button class="btn-iphone" onclick="exportSlide('s2','atlas_s2_iphone67',1284,2778)">⬇ iPhone 1284×2778</button>
+    <button class="btn-ipad"   onclick="exportSlide('s2','atlas_s2_ipad',2048,2732)">⬇ iPad 2048×2732</button>
+    <button class="btn-android" onclick="exportSlide('s2','atlas_s2_android',1080,1920)">⬇ Android 1080×1920</button>
+  </div>
+
+  <div class="slide s2" id="s2">
+    <div class="slide-tag">EXPLORE BY TOPIC</div>
+    <div class="slide-headline">7 knowledge<br><span>categories</span></div>
+    <div class="slide-sub">From constitutional law to tourism &amp; culture</div>
+
+    <div class="phone">
+      <div class="screen">
+        <div class="s2-screen">
+          <div class="app-nav"><span class="app-nav-logo">Atlas AI</span></div>
+          <div class="s2-section-lbl">EXPLORE BY TOPIC</div>
+          <div class="s2-grid">
+            <div class="s2-card" style="--c:#0A0A0A"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#0A0A0A;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Law &amp; Rights</div><div class="s2-card-desc">Constitutional rights &amp; legal processes</div></div>
+            <div class="s2-card"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#0d6efd;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Government</div><div class="s2-card-desc">Passports, PACRA &amp; public services</div></div>
+            <div class="s2-card"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#fcdc04;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Tourism</div><div class="s2-card-desc">Victoria Falls &amp; national parks</div></div>
+            <div class="s2-card"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#6f42c1;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Education</div><div class="s2-card-desc">Schools, exams &amp; scholarships</div></div>
+            <div class="s2-card"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#0A0A0A;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Economy</div><div class="s2-card-desc">GDP, trade &amp; investment data</div></div>
+            <div class="s2-card"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#d63384;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Culture</div><div class="s2-card-desc">73+ ethnic groups &amp; heritage</div></div>
+            <div class="s2-card"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#dc3545;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Healthcare</div><div class="s2-card-desc">Facilities &amp; public health</div></div>
+            <div class="s2-card"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#fd7e14;border-radius:3px 0 0 3px"></div><div class="s2-card-title">Infrastructure</div><div class="s2-card-desc">Roads, energy &amp; telecoms</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 3 — HOW IT WORKS
+════════════════════════════════════════════ -->
+<div class="slide-section">
+  <div class="slide-label">Slide 3 — How it works</div>
+  <div class="export-bar">
+    <button class="btn-iphone" onclick="exportSlide('s3','atlas_s3_iphone',1242,2688)">⬇ iPhone 1242×2688</button>
+    <button class="btn-iphone" onclick="exportSlide('s3','atlas_s3_iphone67',1284,2778)">⬇ iPhone 1284×2778</button>
+    <button class="btn-ipad"   onclick="exportSlide('s3','atlas_s3_ipad',2048,2732)">⬇ iPad 2048×2732</button>
+    <button class="btn-android" onclick="exportSlide('s3','atlas_s3_android',1080,1920)">⬇ Android 1080×1920</button>
+  </div>
+
+  <div class="slide s3" id="s3">
+    <div class="slide-tag">HOW IT WORKS</div>
+    <div class="slide-headline">Verified answers<br><span>in seconds</span></div>
+    <div class="slide-sub">AI-powered search across 90+ official Zambian sources</div>
+
+    <div class="phone">
+      <div class="screen">
+        <div class="s3-screen">
+          <div class="app-nav"><span class="app-nav-logo">Atlas AI</span></div>
+          <div class="s3-step">
+            <div class="s3-num" style="background:#0A0A0A">1</div>
+            <div><div class="s3-step-title">Ask your question</div><div class="s3-step-desc">Type in English, Bemba, Nyanja, or Tonga. No jargon needed.</div></div>
+          </div>
+          <div class="s3-step">
+            <div class="s3-num" style="background:#fcdc04">2</div>
+            <div><div class="s3-step-title">AI searches verified sources</div><div class="s3-step-desc">Retrieves from 90+ official government databases &amp; legal archives.</div></div>
+          </div>
+          <div class="s3-step">
+            <div class="s3-num" style="background:#0A0A0A">3</div>
+            <div><div class="s3-step-title">Get a cited answer</div><div class="s3-step-desc">Full source citations included so you can verify everything yourself.</div></div>
+          </div>
+          <div class="s3-lang">Responds in: English · Bemba · Nyanja · Tonga</div>
+          <div class="s3-free">100% Free · No account required</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 4 — CHAT IN ACTION
+════════════════════════════════════════════ -->
+<div class="slide-section">
+  <div class="slide-label">Slide 4 — Chat in action</div>
+  <div class="export-bar">
+    <button class="btn-iphone" onclick="exportSlide('s4','atlas_s4_iphone',1242,2688)">⬇ iPhone 1242×2688</button>
+    <button class="btn-iphone" onclick="exportSlide('s4','atlas_s4_iphone67',1284,2778)">⬇ iPhone 1284×2778</button>
+    <button class="btn-ipad"   onclick="exportSlide('s4','atlas_s4_ipad',2048,2732)">⬇ iPad 2048×2732</button>
+    <button class="btn-android" onclick="exportSlide('s4','atlas_s4_android',1080,1920)">⬇ Android 1080×1920</button>
+  </div>
+
+  <div class="slide s4" id="s4">
+    <div class="slide-tag">SEE IT IN ACTION</div>
+    <div class="slide-headline">Real answers,<br><span>cited sources</span></div>
+    <div class="slide-sub">Every response references official documents</div>
+
+    <div class="phone">
+      <div class="screen" style="height:490px">
+        <div class="s4-screen" style="height:100%;display:flex">
+          <div class="s4-sidebar">
+            <div class="s4-logo">AZ</div>
+            <div class="s4-newchat">+ New<br>Chat</div>
+            <div class="s4-hist"></div>
+            <div class="s4-hist" style="opacity:.5"></div>
+          </div>
+          <div class="s4-main">
+            <div class="s4-topbar">What are my rights under the constitution?</div>
+            <div class="s4-messages" style="flex:1">
+              <div class="s4-user-bubble">What are my rights under the Zambian constitution?</div>
+              <div class="s4-ai-row">
+                <div class="s4-az">AZ</div>
+                <div class="s4-bubble">
+                  <b>Your Fundamental Rights</b><br><br>
+                  <b>1. Equality Rights (Art. 23)</b><br>
+                  Equal treatment regardless of race, tribe, sex, or political opinion<br><br>
+                  <b>2. Life &amp; Liberty (Art. 12-13)</b><br>
+                  Right to life · Personal liberty<br><br>
+                  <b>3. Freedom of Expression (Art. 20)</b><br>
+                  Speech, press &amp; academic freedom<br><br>
+                  <span class="cite">📄 Constitution of Zambia (2016)</span>
+                  <span class="cite">📄 Human Rights in Zambia</span>
+                </div>
+              </div>
+            </div>
+            <div class="s4-input">Ask anything about Zambia...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SLIDE 5 — TRUSTED SOURCES
+════════════════════════════════════════════ -->
+<div class="slide-section">
+  <div class="slide-label">Slide 5 — Trusted data sources</div>
+  <div class="export-bar">
+    <button class="btn-iphone" onclick="exportSlide('s5','atlas_s5_iphone',1242,2688)">⬇ iPhone 1242×2688</button>
+    <button class="btn-iphone" onclick="exportSlide('s5','atlas_s5_iphone67',1284,2778)">⬇ iPhone 1284×2778</button>
+    <button class="btn-ipad"   onclick="exportSlide('s5','atlas_s5_ipad',2048,2732)">⬇ iPad 2048×2732</button>
+    <button class="btn-android" onclick="exportSlide('s5','atlas_s5_android',1080,1920)">⬇ Android 1080×1920</button>
+  </div>
+
+  <div class="slide s5" id="s5">
+    <div class="slide-tag">TRUSTED KNOWLEDGE</div>
+    <div class="slide-headline">Powered by official<br><span>data sources</span></div>
+    <div class="slide-sub">Every answer cites verifiable Zambian authorities</div>
+
+    <div class="phone">
+      <div class="screen">
+        <div class="s5-screen">
+          <div class="app-nav"><span class="app-nav-logo">Atlas AI</span></div>
+          <div class="s5-section-lbl">TRUSTED KNOWLEDGE</div>
+          <div class="s5-source"><div class="s5-dot" style="background:#0A0A0A"></div><div><div class="s5-source-name">Government of Zambia (GRZ)</div><div class="s5-source-sub">Official government portal</div></div></div>
+          <div class="s5-source"><div class="s5-dot" style="background:#0d6efd"></div><div><div class="s5-source-name">ZamStats — Central Statistical</div><div class="s5-source-sub">National statistics &amp; open data</div></div></div>
+          <div class="s5-source"><div class="s5-dot" style="background:#0A0A0A"></div><div><div class="s5-source-name">Zambia Legal Info. Institute</div><div class="s5-source-sub">Laws, acts &amp; court decisions</div></div></div>
+          <div class="s5-source"><div class="s5-dot" style="background:#6f42c1"></div><div><div class="s5-source-name">National Assembly of Zambia</div><div class="s5-source-sub">Parliament &amp; legislation</div></div></div>
+          <div class="s5-source"><div class="s5-dot" style="background:#fd7e14"></div><div><div class="s5-source-name">Bank of Zambia</div><div class="s5-source-sub">Financial &amp; monetary data</div></div></div>
+          <div class="s5-source"><div class="s5-dot" style="background:#fcdc04"></div><div><div class="s5-source-name">Zambia Tourism Agency</div><div class="s5-source-sub">Parks &amp; travel guides</div></div></div>
+          <div class="s5-badge">
+            <div class="s5-badge-title">Aligned with Zambia's National AI Strategy</div>
+            <div class="s5-badge-sub">2024–2026 · Free to use · atlas.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXPORT ENGINE
+════════════════════════════════════════════ -->
+<script>
+function exportSlide(id, filename, targetW, targetH) {
+  const el = document.getElementById(id);
+  if (!el) return alert('Slide not found');
+
+  const btn = event.target;
+  btn.textContent = '⏳ Exporting...';
+  btn.disabled = true;
+
+  const srcW = el.offsetWidth;
+  const srcH = el.offsetHeight;
+  const scaleX = targetW / srcW;
+  const scaleY = targetH / srcH;
+  // use the larger scale so the slide fills the frame, then centre
+  const scale = Math.min(scaleX, scaleY);
+
+  htmlToImage.toPng(el, {
+    width: targetW,
+    height: targetH,
+    style: {
+      transform: `scale(${scale})`,
+      transformOrigin: 'top left',
+      marginLeft: `${(targetW - srcW * scale) / 2}px`,
+      marginTop: `${(targetH - srcH * scale) / 2}px`,
+    },
+    pixelRatio: 1,
+  })
+  .then(dataUrl => {
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename + '.png';
+    a.click();
+    btn.textContent = '✅ Done!';
+    setTimeout(() => {
+      btn.textContent = btn.textContent.replace('✅ Done!', btn.textContent.split('⬇ ')[1] ? '⬇ ' + btn.textContent.split('⬇ ')[1] : btn.textContent);
+      btn.disabled = false;
+    }, 2000);
+  })
+  .catch(err => {
+    console.error(err);
+    btn.textContent = '❌ Error — check console';
+    btn.disabled = false;
+  });
+}
+
+// Reset button text helper
+document.querySelectorAll('.export-bar button').forEach(btn => {
+  btn._originalText = btn.textContent;
+});
+</script>
+</body>
+</html>

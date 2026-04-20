@@ -1,0 +1,26 @@
+[Unit]
+Description=AskZambia Data Hunter - Automated Knowledge Base Ingestion
+After=network.target docker.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/askzambia-hunter
+ExecStart=/usr/bin/python3 /opt/askzambia-hunter/hunter.py --loop
+Restart=on-failure
+RestartSec=60
+
+# Environment
+Environment=DB_HOST=localhost
+Environment=DB_PORT=5432
+Environment=DB_NAME=askzambia
+Environment=DB_USER=askzambia
+Environment=OPENAI_API_KEY=
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=askzambia-hunter
+
+[Install]
+WantedBy=multi-user.target
