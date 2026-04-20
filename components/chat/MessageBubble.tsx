@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { SourceCitation } from "./SourceCitation";
 import { UgandaFlag } from "@/components/shared/UgandaFlag";
 
@@ -166,8 +167,8 @@ export function MessageBubble({ role, content, sources }: MessageProps) {
       </div>
       <div className="min-w-0 max-w-[90%] sm:max-w-[85%]">
         <div className="rounded-2xl rounded-tl-sm border border-[#e8ecf0] bg-white px-4 py-3 text-[0.9rem] leading-relaxed text-[#1e293b] shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-          <div className="prose prose-sm prose-green max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:leading-relaxed [&_li]:leading-relaxed [&_h1]:text-[#0f1f14] [&_h2]:text-[#0f1f14] [&_h3]:text-[#0f1f14] [&_strong]:text-[#0f1f14] [&_a]:text-[#0A0A0A] [&_code]:rounded [&_code]:bg-[#f5f7fa] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.8rem]">
-            <ReactMarkdown>{content}</ReactMarkdown>
+          <div className="prose prose-sm max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:leading-relaxed [&_li]:leading-relaxed [&_h1]:text-[#0A0A0A] [&_h2]:text-[#0A0A0A] [&_h3]:text-[#0A0A0A] [&_strong]:text-[#0A0A0A] [&_a]:text-[#0A0A0A] [&_a]:underline [&_a]:decoration-[#FCDC04] [&_a]:decoration-2 [&_a]:underline-offset-2 [&_code]:rounded [&_code]:bg-[#f5f7fa] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.8rem] [&_table]:my-3 [&_table]:w-full [&_table]:border-collapse [&_table]:overflow-hidden [&_table]:rounded-lg [&_table]:border [&_table]:border-[#e8ecf0] [&_table]:text-[0.82rem] [&_thead]:bg-[#FFFBEB] [&_th]:border [&_th]:border-[#e8ecf0] [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_th]:text-[#0A0A0A] [&_td]:border [&_td]:border-[#eef0f3] [&_td]:px-3 [&_td]:py-2 [&_td]:align-top [&_tbody_tr:nth-child(even)]:bg-[#fafbfc] [&_ol]:pl-5 [&_ul]:pl-5 [&_li]:my-1 [&_hr]:my-4 [&_hr]:border-[#e8ecf0] [&_blockquote]:border-l-4 [&_blockquote]:border-[#FCDC04] [&_blockquote]:bg-[#FFFBEB] [&_blockquote]:px-4 [&_blockquote]:py-2 [&_blockquote]:italic">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
           </div>
         </div>
         {sources && sources.length > 0 && <SourceCitation sources={sources} />}
