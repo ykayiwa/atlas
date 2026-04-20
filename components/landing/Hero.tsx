@@ -124,15 +124,35 @@ export function Hero() {
         Minister&apos;s Office, 24 hours a day, in English, Mandarin, Arabic, or French.
       </p>
 
-      <div className="mt-10 w-full max-w-[720px]">
+      <div className="relative mt-10 w-full max-w-[720px]">
+        {/* Yellow aurora halo — draws the eye to the input */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-6 -z-10 rounded-[32px] opacity-90 blur-2xl"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(252,220,4,0.55), transparent 65%), radial-gradient(ellipse 30% 50% at 85% 70%, rgba(217,0,0,0.18), transparent 70%)",
+          }}
+        />
         <form onSubmit={handleSubmit}>
           <div
-            className={`relative rounded-2xl border bg-white transition-all duration-300 ${
+            className={`relative rounded-2xl border-2 bg-white transition-all duration-300 ${
               isFocused
-                ? "border-[#0A0A0A]/40 shadow-[0_0_0_3px_rgba(252,220,4,0.4),0_8px_40px_rgba(0,0,0,0.08)]"
-                : "border-[#e2e8f0] shadow-[0_2px_20px_rgba(0,0,0,0.06)]"
+                ? "border-[#0A0A0A] shadow-[0_0_0_4px_rgba(252,220,4,0.55),0_20px_48px_rgba(0,0,0,0.14)]"
+                : "border-[#0A0A0A]/10 shadow-[0_16px_40px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.04)]"
             }`}
           >
+            {/* Hint label — only before any typing */}
+            {!query && !isFocused ? (
+              <div className="pointer-events-none absolute -top-3 left-5 flex items-center gap-1.5 rounded-full border border-[#0A0A0A] bg-[#FCDC04] px-2.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.1em] text-[#0A0A0A] shadow-sm">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D90000] opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#D90000]" />
+                </span>
+                Start here
+              </div>
+            ) : null}
+
             <textarea
               ref={textareaRef}
               value={query}
@@ -142,13 +162,13 @@ export function Hero() {
               onKeyDown={handleKeyDown}
               placeholder="Ask about incentives, privatization opportunities, land acquisition, tax treaties…"
               rows={1}
-              className="w-full resize-none rounded-2xl bg-transparent px-5 pb-3 pt-[18px] text-[1.05rem] leading-[1.6] text-[#0A0A0A] placeholder-[#94a3b8] outline-none"
-              style={{ minHeight: "56px", maxHeight: "120px" }}
+              className="w-full resize-none rounded-2xl bg-transparent px-5 pb-3 pt-[20px] text-[1.05rem] leading-[1.6] text-[#0A0A0A] placeholder-[#94a3b8] outline-none"
+              style={{ minHeight: "60px", maxHeight: "140px" }}
             />
 
             <div className="flex items-center justify-between border-t border-[#f1f5f9] px-4 py-2.5">
-              <div className="flex items-center gap-1.5 text-[0.75rem] text-[#94a3b8]">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-50">
+              <div className="flex items-center gap-1.5 text-[0.75rem] text-[#64748b]">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
                   <circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" />
                 </svg>
                 <span className="hidden sm:inline">Answers grounded in Ugandan investment law &amp; approved policy</span>
@@ -157,10 +177,10 @@ export function Hero() {
               <button
                 type="submit"
                 disabled={!query.trim()}
-                className={`flex items-center gap-2 rounded-xl px-5 py-2 text-[0.875rem] font-semibold transition-all duration-200 ${
+                className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-[0.875rem] font-semibold transition-all duration-200 ${
                   query.trim()
-                    ? "bg-[#0A0A0A] text-[#FCDC04] shadow-sm hover:bg-black active:scale-[0.97]"
-                    : "bg-[#f1f5f9] text-[#94a3b8] cursor-not-allowed"
+                    ? "bg-[#0A0A0A] text-[#FCDC04] shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:-translate-y-[1px] hover:bg-black active:scale-[0.97]"
+                    : "bg-[#0A0A0A] text-[#FCDC04] opacity-55 cursor-not-allowed"
                 }`}
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
