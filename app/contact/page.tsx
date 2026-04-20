@@ -79,7 +79,7 @@ export default function ContactPage() {
         <ul>
           <li>
             <strong>Email:</strong>{" "}
-            <a href="mailto:info@africaone.com">info@africaone.com</a>
+            <a href="mailto:info@atlasug.com">info@atlasug.com</a>
           </li>
         </ul>
       </section>
