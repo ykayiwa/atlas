@@ -10,13 +10,18 @@ export function Footer() {
           Atlas AI
         </div>
         <nav className="flex flex-wrap gap-7">
-          {["About", "Privacy", "Terms", "Contact"].map((item) => (
+          {[
+            { label: "About", href: "/about" },
+            { label: "Privacy", href: "/privacy" },
+            { label: "Terms", href: "/terms" },
+            { label: "Contact", href: "/contact" },
+          ].map((item) => (
             <Link
-              key={item}
-              href="#"
+              key={item.label}
+              href={item.href}
               className="text-[0.84rem] text-white/45 transition-colors hover:text-white"
             >
-              {item}
+              {item.label}
             </Link>
           ))}
         </nav>
