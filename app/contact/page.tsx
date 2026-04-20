@@ -81,14 +81,6 @@ export default function ContactPage() {
             <strong>Email:</strong>{" "}
             <a href="mailto:info@africaone.com">info@africaone.com</a>
           </li>
-          <li>
-            <strong>Telephone:</strong>{" "}
-            <a href="tel:+256772685270">+256 772 685 270</a>
-          </li>
-          <li>
-            <strong>Principal contact:</strong> Yusuf Kayiwa, Africa One ePortal
-            Limited
-          </li>
         </ul>
       </section>
 
